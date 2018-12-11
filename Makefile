@@ -93,7 +93,7 @@ versiona: ## Incremente uma versão (minima)
 git_trazer: ## Atualiza o repositorio local
 	@clear
 	@$(call msg_ok,"Verificando se existem coisas novas!!")
-	#git pull
+	git pull
 
 .PHONY: git_enviar
 git_enviar: ## Enviar para o git
@@ -147,8 +147,8 @@ ansible: ## Subir localmente o docker-ansible
 
 
 #TESTAR IMAGEM
-.PHONY: controlador_testa_build
-controlador_testa_build: ## Será que o container do controlador está ok?
+.PHONY: ansible_testa_build
+ansible_testa_build: ## Será que o container do ansible está ok?
 	@$(call msg_warn,"Testando o container do docker-ansible...")
 	@sleep 1; docker run -it --rm docker-ansible:$(shell cat .version) -v | grep -q "ansible 2.7.1" && \
  	  echo -e "\t$(GREEN_COLOR)Controlador  = OK $(NO_COLOR) " || \
