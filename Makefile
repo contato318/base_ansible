@@ -140,18 +140,32 @@ ansible_build: ## Constroi o container do Ansible
 
 #Usar o ansible
 .PHONY: ansible
-ansible: ## Subir localmente o docker-ansible
+ansible: ## Exeutar localmente o ansible via  docker-ansible
 		@clear
 		make ansible_build
-		@docker run -it --rm docker-ansible:$(shell cat .version)
+		@docker run -it --rm docker-ansible:$(shell cat .version) /usr/local/bin/ansible
 
+
+.PHONY: ansible-playbook
+ansible-playbook: ## Exeutar localmente o ansible-playbook via  docker-ansible
+	@clear
+	make ansible_build
+	@docker run -it --rm docker-ansible:$(shell cat .version) /usr/local/bin/ansible-playbook
+
+
+.PHONY: ansible-console
+ansible-console: ## Exeutar localmente o ansible-console via  docker-ansible 
+	@clear
+	make ansible_build
+	@docker run -it --rm -v $(CURRENT_DIR)/inventario:/root/inventario docker-ansible:$(shell cat .version) /usr/local/bin/ansible-console -i /root/inventario $(GRUPO)
 
 #TESTAR IMAGEM
 .PHONY: ansible_testa_build
 ansible_testa_build: ## Será que o container do ansible está ok?
+	make ansible_build
 	@$(call msg_warn,"Testando o container do docker-ansible...")
-	@sleep 1; docker run -it --rm docker-ansible:$(shell cat .version) -v | grep -q "ansible 2.7.1" && \
- 	  echo -e "\t$(GREEN_COLOR)Controlador  = OK $(NO_COLOR) " || \
+	@sleep 1; docker run -it --rm docker-ansible:$(shell cat .version) /usr/local/bin/ansible --version | grep -q "ansible 2.7.4" && \
+		echo -e "\t$(GREEN_COLOR)Controlador  = OK $(NO_COLOR) " || \
  		echo -e "\t$(RED_COLOR)Controlador  = NOK $(NO_COLOR) "
 
 
