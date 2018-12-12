@@ -1,10 +1,9 @@
 .version_comentario
 .version_temp
 inventario
+test-inventary
 testes/.env
-testes/test-inventary
 .env*
-
 
 *.*~
 *.tar

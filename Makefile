@@ -150,7 +150,7 @@ ansible: ## Exeutar localmente o ansible via  docker-ansible
 ansible-playbook: ## Exeutar localmente o ansible-playbook via  docker-ansible
 	@clear
 	make ansible_build
-	@docker run -it --rm docker-ansible:$(shell cat .version) /usr/local/bin/ansible-playbook
+	docker run -it --rm docker-ansible:$(shell cat .version) /root/ansible-playbook.sh 
 
 
 .PHONY: ansible-console

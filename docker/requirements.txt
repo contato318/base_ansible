@@ -1,3 +1,4 @@
 proxmoxer==1.0.3
 ansible==2.7.4
 ansible-vault==1.2.0
+requests==2.20.1
