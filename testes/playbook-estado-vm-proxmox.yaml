@@ -1,0 +1,31 @@
+- hosts: localhost
+  become: false
+  gather_facts: yes
+  strategy: free
+  ignore_errors: yes
+  vars:
+    api_user:  '{{ lookup("env", "APIUSER") }}'
+    api_password: '{{ lookup("env", "APIPASSWORD") }}'
+    api_host: '{{ lookup("env", "APIHOST") }}'
+    clone: '{{ lookup("env", "TEMPLATE_CLONE") }}'
+    vmid_origem: '{{ lookup("env", "VMID_ORIGEM") }}'
+    node: '{{ lookup("env", "NODE") }}'
+    storage: '{{ lookup("env", "STORAGE") }}'
+    format: qcow2
+    pool: '{{ lookup("env", "POOL") }}'
+    timeout: 200
+  tasks:
+  - name: Mantendo o estado dos servidores
+    proxmox_kvm:
+        api_user     : "{{ api_user }}"
+        api_password : "{{ api_password }}"
+        api_host     : "{{ api_host }}"
+        node         : "{{ node }}"
+        vmid         : "{{ hostvars[item].vm_id }}"
+        state        : "{{ hostvars[item].estado }}"
+        force        : yes
+        timeout      : 300
+    vars:
+      host_waiting_running: "{{ hostvars[item].ansible_host }}"
+    with_inventory_hostnames:
+            - alunos-puppet

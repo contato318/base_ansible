@@ -1,3 +1,4 @@
+#Criado e mantido por dirceusilva.. nao estah lindo, mas funciona muito bem...
 FROM ubuntu:18.04
 
 RUN apt-get -y update \
