@@ -100,6 +100,7 @@ git_enviar: ## Enviar para o git
 	@clear
 	@$(call msg_warn,"Enviando para git...")
 	make git_trazer
+	make ansible_testa_build
 	@$(call msg_warn,"Adcionando nova versao e dando o commit...")
 	@$(shell tools/versiona.sh)
 	@$(call msg_ok,"Nova versão")
@@ -150,11 +151,11 @@ ansible: ## Exeutar localmente o ansible via  docker-ansible
 ansible-playbook: ## Exeutar localmente o ansible-playbook via  docker-ansible
 	@clear
 	make ansible_build
-	docker run -it --rm docker-ansible:$(shell cat .version) /root/ansible-playbook.sh 
+	docker run -it --rm docker-ansible:$(shell cat .version) /root/ansible-playbook.sh
 
 
 .PHONY: ansible-console
-ansible-console: ## Exeutar localmente o ansible-console via  docker-ansible 
+ansible-console: ## Exeutar localmente o ansible-console via  docker-ansible
 	@clear
 	make ansible_build
 	@docker run -it --rm -v $(CURRENT_DIR)/inventario:/root/inventario docker-ansible:$(shell cat .version) /usr/local/bin/ansible-console -i /root/inventario $(GRUPO)
