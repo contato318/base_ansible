@@ -165,7 +165,7 @@ ansible-console: ## Exeutar localmente o ansible-console via  docker-ansible
 ansible_testa_build: ## Será que o container do ansible está ok?
 	make ansible_build
 	@$(call msg_warn,"Testando o container do docker-ansible...")
-	@sleep 1; docker run -it --rm docker-ansible:$(shell cat .version) /usr/local/bin/ansible --version | grep -q "ansible 2.7.4" && \
+	@sleep 1; docker run -it --rm docker-ansible:$(shell cat .version) /usr/local/bin/ansible --version | grep -q "ansible [core 2.13.1]" && \
 		echo -e "\t$(GREEN_COLOR)Controlador  = OK $(NO_COLOR) " || \
  		echo -e "\t$(RED_COLOR)Controlador  = NOK $(NO_COLOR) "
 
